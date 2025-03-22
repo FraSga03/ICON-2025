@@ -174,7 +174,7 @@ def get_avg_pts_between_dates(graph, player, from_d, to_d):
 try:
     graph = get_graph()
 
-    graph.serialize("kg.rdf", format="turtle")
+    graph.serialize("./documents/knowledge_graph/kg.rdf", format="turtle")
 
     command = int(sys.argv[1])
 
