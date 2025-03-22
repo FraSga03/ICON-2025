@@ -9,6 +9,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
 
+from plotter import plot_conf_matrix, plot_roc_curve, plot_pr_rate_curve, plot_f1
+
+
 class SupervisedModel(object):
     model = ""
     params = ""
@@ -20,21 +23,21 @@ class SupervisedModel(object):
         self.must_normalize = must_normalize
 
 
-def generate_report(model, x_test, y_test, name):
+def generate_report(model, x_test, y_test, name, training_type):
     print("Stampa report...")
 
     y_prediction = model.predict(x_test)
 
-    # plot_conf_matrix(y_test, y_prediction, name)
-    # plot_roc_curve(y_test, y_prediction, name)
-    # plot_pr_rate_curve(y_test, y_prediction, name)
-    # plot_f1(y_test, y_prediction, name)
+    plot_conf_matrix(y_test, y_prediction, name, f"documents/{type(model).__name__}/{training_type}_MATRIX.png")
+    plot_roc_curve(y_test, y_prediction, name, f"documents/{type(model).__name__}/{training_type}_ROC.png")
+    plot_pr_rate_curve(y_test, y_prediction, name, f"documents/{type(model).__name__}/{training_type}_PR.png")
+    plot_f1(y_test, y_prediction, name, f"documents/{type(model).__name__}/{training_type}_F1.png")
 
     print(f"Accuratezza {accuracy_score(y_test, y_prediction)}\n")
 
 
 def dt_with_grid_k_fold_shuffle(model, params, x_train, y_train, x_test, y_test, must_normalize):
-    print(f"Training {type(model).__name__} con KFold, k=10")
+    print(f"Training {type(model).__name__} con KFold e shuffle")
 
     if must_normalize:
         scaler = StandardScaler()
@@ -53,7 +56,16 @@ def dt_with_grid_k_fold_shuffle(model, params, x_train, y_train, x_test, y_test,
     print(grid_search.best_params_)
     print("Training finito")
 
-    return {generate_report(best_model, x_test, y_test, f"{type(model).__name__} con KFold"), best_model}
+    return {
+        generate_report(
+            best_model,
+            x_test,
+            y_test,
+            f"{type(model).__name__} con KFold e shuffle",
+            f"KF_SHUFFLE"
+        ),
+        best_model
+    }
 
 def dt_with_grid_k_fold(model, params, x_train, y_train, x_test, y_test, must_normalize):
     print(f"Training {type(model).__name__} con KFold senza shuffle")
@@ -74,11 +86,20 @@ def dt_with_grid_k_fold(model, params, x_train, y_train, x_test, y_test, must_no
     print(grid_search.best_params_)
     print("Training finito")
 
-    return {generate_report(best_model, x_test, y_test, f"{type(model).__name__} con CV"), best_model}
+    return {
+        generate_report(
+            best_model,
+            x_test,
+            y_test,
+            f"{type(model).__name__}  con KFold e senza shuffle",
+            f"KF_WO_SHUFFLE"
+        ),
+        best_model
+    }
 
 
 def dt_without_cv(model, x_train, y_train, x_test, y_test, must_normalize):
-    print(f"Training {type(model).__name__} senza CV")
+    print(f"Training {type(model).__name__} senza KF")
 
     if must_normalize:
         scaler = StandardScaler()
@@ -90,7 +111,16 @@ def dt_without_cv(model, x_train, y_train, x_test, y_test, must_normalize):
 
     print("Training finito")
 
-    return {generate_report(model, x_test, y_test, f"{type(model).__name__} senza CV"), model}
+    return {
+        generate_report(
+            model,
+            x_test,
+            y_test,
+            f"{type(model).__name__} senza CV",
+            "WO_KF"
+        ),
+        model
+    }
 
 
 data_train = pd.read_csv("./datasets/doncic_ref_train.csv")
@@ -118,10 +148,10 @@ predictors = [
     SupervisedModel(
         RandomForestClassifier(random_state=40),
         {
-            'n_estimators': [10, 15, 20],        # Numero di alberi
-            'max_depth': [10, 20],        # Profondità massima degli alberi
-            'min_samples_split': [2, 5, 10],        # Minimo campioni per dividere
-            'min_samples_leaf': [1, 2, 4]           # Minimo campioni per foglia
+            'n_estimators': [10, 15, 20], # Numero di alberi
+            'max_depth': [10, 20], # Profondità massima degli alberi
+            'min_samples_split': [2, 5, 10],  # Minimo campioni per dividere
+            'min_samples_leaf': [1, 2, 4]  # Minimo campioni per foglia
         },
         False
     ),

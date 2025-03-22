@@ -5,7 +5,7 @@ import seaborn as sns
 from sklearn.metrics import confusion_matrix, roc_curve, auc, precision_recall_curve, classification_report
 
 
-def plot_conf_matrix(y_test, y_prediction, name):
+def plot_conf_matrix(y_test, y_prediction, name, filename):
     conf_matrix = confusion_matrix(y_test, y_prediction)
     plot.figure(figsize=(6,5))
     sns.heatmap(
@@ -19,10 +19,13 @@ def plot_conf_matrix(y_test, y_prediction, name):
     plot.ylabel("Valori Reali")
     plot.xlabel("Valori Predetti")
     plot.title(name)
+
+    plot.savefig(filename)
+
     plot.show()
 
 
-def plot_roc_curve(y_test, y_prediction, name):
+def plot_roc_curve(y_test, y_prediction, name, filename):
     fpr, tpr, thresholds = roc_curve(y_test, y_prediction)
     roc_auc = auc(fpr, tpr)
 
@@ -33,10 +36,13 @@ def plot_roc_curve(y_test, y_prediction, name):
     plot.ylabel('True Positive Rate')
     plot.legend(loc='best')
     plot.title(name)
+
+    plot.savefig(filename)
+
     plot.show()
 
 
-def plot_pr_rate_curve(y_test, y_prediction, name):
+def plot_pr_rate_curve(y_test, y_prediction, name, filename):
     p, r, _ = precision_recall_curve(y_test, y_prediction)
 
     plot.figure(figsize=(6,5))
@@ -45,9 +51,12 @@ def plot_pr_rate_curve(y_test, y_prediction, name):
     plot.ylabel('Precision')
     plot.title('Precision-Recall Curve')
     plot.title(name)
+
+    plot.savefig(filename)
+
     plot.show()
 
-def plot_f1(y_test, y_prediction, name):
+def plot_f1(y_test, y_prediction, name, filename):
     report = classification_report(y_test, y_prediction, output_dict=True)
     f1_scores = [report[str(i)]['f1-score'] for i in np.unique(y_test)]
     classes = [str(i) for i in np.unique(y_test)]
@@ -59,7 +68,11 @@ def plot_f1(y_test, y_prediction, name):
     plot.title("F1 Score per Class")
     plot.ylim(0, 1)
     plot.title(name)
+
+    plot.savefig(filename)
+
     plot.show()
+
 
 def plot_structure(model):
     graph = nx.DiGraph()
