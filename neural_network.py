@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.metrics import log_loss
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-
+from sklearn.preprocessing import StandardScaler
 
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
@@ -16,6 +15,13 @@ def relu_derivative(x):
 def sigmoid_derivative(x):
     return x * (1 - x)
 
+def swish(x):
+    return x / (1 + np.exp(-x))
+
+def swish_derivative(x):
+    sig = sigmoid(x)
+    return sig + x * sig * (1 - sig)
+
 def layer(val, weight, bias, activate_function):
     inter_1 = np.dot(val, weight) + bias
     activate_1 = activate_function(inter_1)
@@ -25,13 +31,6 @@ def layer(val, weight, bias, activate_function):
 def apply_dropout(layer_output, drop_prob):
     mask = np.random.binomial(1, 1 - drop_prob, size=layer_output.shape)
     return layer_output * mask
-
-def swish(x):
-    return x / (1 + np.exp(-x))
-
-def swish_derivative(x):
-    sig = sigmoid(x)
-    return sig + x * sig * (1 - sig)
 
 np.random.seed(42)
 
@@ -48,6 +47,8 @@ hidden_layer_size_1 = 4
 hidden_layer_size_2 = 3
 output_layer_size = 1
 
+print("Defizione pesi e bias iniziali...")
+
 w1 = np.random.randn(input_layer_size, hidden_layer_size_1)
 b1 = np.random.randn(1, hidden_layer_size_1)
 
@@ -61,12 +62,14 @@ min_loss = 0.1
 prev_loss = 0
 learning_rate = 0.002
 epochs = 50000
-dropout_rate = 0.4
+dropout_rate = 0.05
+
+print("Backtracking...")
 
 for epoch in range(epochs):
     inter_1, activate_1 = layer(xs, w1, b1, leaky_relu)
 
-    # activate_1 = apply_dropout(activate_1, dropout_rate)
+    activate_1 = apply_dropout(activate_1, dropout_rate)
     inter_2, activate_2 = layer(activate_1, w2, b2, swish)
 
     inter_3, activate_3 = layer(activate_2, w3, b3, sigmoid)
@@ -100,18 +103,17 @@ for epoch in range(epochs):
         print(f"Break due to goal achieved ")
         break
 
-    # if (np.absolute(loss - prev_loss) < 0.00001) and epoch > (epochs/2) :
-    #     print(f"Break to minimum error delta")
-    #     break
+    if (np.absolute(loss - prev_loss) < 0.000001) and epoch > (epochs/2) :
+        print(f"Delta raggiunto")
+        break
 
     prev_loss = loss
 
     if epoch % 1000 == 0:
-        print(f"Epoch {epoch}/{epochs} - Loss: {loss:.5f}")
+        print(f"Epoca {epoch}/{epochs} - Loss: {loss:.5f}")
 
-print("Defizione pesi e bias iniziali...")
 
-print("Calcolo della rete...")
+print("Calcolo su test_set...")
 
 x_test = scaler.fit_transform(data_test.drop(columns=["WIN"]))
 y_tests = np.array(data_test["WIN"]).reshape(-1, 1)

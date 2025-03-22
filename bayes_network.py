@@ -71,8 +71,8 @@ try:
 
     model_name = "auto_model" if command == 0 else "my_model"
 
-    print("Learned Structure: \n", model)
+    print("Struttura imparata: \n", model)
     plot_structure(model, f"./documents/bayesian_networks/{model_name}.png")
-    print("Random Examples: \n", generate_random_example(model, 20))
+    print("Esempi casuali: \n", generate_random_example(model, 20))
 except:
     print("Parametri errati o mancanti")

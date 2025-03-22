@@ -4,7 +4,6 @@ import numpy as np
 import seaborn as sns
 from sklearn.metrics import confusion_matrix, roc_curve, auc, precision_recall_curve, classification_report
 
-
 def plot_conf_matrix(y_test, y_prediction, name, filename):
     conf_matrix = confusion_matrix(y_test, y_prediction)
     plot.figure(figsize=(6,5))
