@@ -33,7 +33,7 @@ def generate_report(model, x_test, y_test, name):
     print(f"Accuratezza {accuracy_score(y_test, y_prediction)}\n")
 
 
-def dt_with_grid_kcv(model, params, x_train, y_train, x_test, y_test, must_normalize):
+def dt_with_grid_k_fold_shuffle(model, params, x_train, y_train, x_test, y_test, must_normalize):
     print(f"Training {type(model).__name__} con KFold, k=10")
 
     if must_normalize:
@@ -55,8 +55,8 @@ def dt_with_grid_kcv(model, params, x_train, y_train, x_test, y_test, must_norma
 
     return {generate_report(best_model, x_test, y_test, f"{type(model).__name__} con KFold"), best_model}
 
-def dt_with_grid_cv(model, params, x_train, y_train, x_test, y_test, must_normalize):
-    print(f"Training {type(model).__name__} con CV")
+def dt_with_grid_k_fold(model, params, x_train, y_train, x_test, y_test, must_normalize):
+    print(f"Training {type(model).__name__} con KFold senza shuffle")
 
     if must_normalize:
         scaler = StandardScaler()
@@ -161,7 +161,7 @@ try:
     predictor = predictors[index]
 
     acc1, model1 = dt_without_cv(predictor.model, X_train, Y_train, X_test, Y_test, predictor.must_normalize)
-    acc2, model2 = dt_with_grid_cv(predictor.model, predictor.params, X_train, Y_train, X_test, Y_test, predictor.must_normalize)
-    acc3, model3 = dt_with_grid_kcv(predictor.model, predictor.params, X_train , Y_train, X_test, Y_test, predictor.must_normalize)
+    acc2, model2 = dt_with_grid_k_fold(predictor.model, predictor.params, X_train, Y_train, X_test, Y_test, predictor.must_normalize)
+    acc3, model3 = dt_with_grid_k_fold_shuffle(predictor.model, predictor.params, X_train, Y_train, X_test, Y_test, predictor.must_normalize)
 except:
     print("Indica un modello utilizzando un parametro che va da 0 a 4")
