@@ -233,4 +233,4 @@ try:
 
     print_results(q_results, q_formatters)
 except:
-    print("Missing or invalid arguments")
+    print("Parametri errati o mancanti")

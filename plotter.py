@@ -21,9 +21,7 @@ def plot_conf_matrix(y_test, y_prediction, name, filename):
     plot.title(name)
 
     plot.savefig(filename)
-
     plot.show()
-
 
 def plot_roc_curve(y_test, y_prediction, name, filename):
     fpr, tpr, thresholds = roc_curve(y_test, y_prediction)
@@ -38,9 +36,7 @@ def plot_roc_curve(y_test, y_prediction, name, filename):
     plot.title(name)
 
     plot.savefig(filename)
-
     plot.show()
-
 
 def plot_pr_rate_curve(y_test, y_prediction, name, filename):
     p, r, _ = precision_recall_curve(y_test, y_prediction)
@@ -53,7 +49,6 @@ def plot_pr_rate_curve(y_test, y_prediction, name, filename):
     plot.title(name)
 
     plot.savefig(filename)
-
     plot.show()
 
 def plot_f1(y_test, y_prediction, name, filename):
@@ -70,11 +65,10 @@ def plot_f1(y_test, y_prediction, name, filename):
     plot.title(name)
 
     plot.savefig(filename)
-
     plot.show()
 
 
-def plot_structure(model):
+def plot_structure(model, filename):
     graph = nx.DiGraph()
     graph.add_edges_from(model.edges())
 
@@ -82,4 +76,6 @@ def plot_structure(model):
     pos = nx.spring_layout(graph, seed=42, k=10)
     nx.draw(graph, pos, with_labels=True, node_size=3000, node_color="green", edge_color="black", font_size=10)
     plot.title("Learned Bayesian Network Structure")
+
+    plot.savefig(filename)
     plot.show()
