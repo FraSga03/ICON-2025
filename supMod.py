@@ -8,9 +8,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
-
 from plotter import plot_conf_matrix, plot_roc_curve, plot_pr_rate_curve, plot_f1
-
 
 class SupervisedModel(object):
     model = ""
