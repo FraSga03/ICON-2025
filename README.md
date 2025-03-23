@@ -2,20 +2,20 @@
 
 Questo progetto è realizzato per l'esame di ICON, tenuto dal Professore Nicola Fanizzi presso l'Università degli Studi di Bari Aldo Moro.
 
-Tutta la documentazione è disponibile nel file documentation.md o in formato PDF documentation.pdf
-
-# Esecuzione script
+Tutta la documentazione è disponibile nel file [documentation.md](documentation.md)
+documentation.md o in formato PDF [documentation.pdf](documentation.pdf).
+## Esecuzione script
 
 Guida all’esecuzione degli script del progetto:
 
-## Installazione librerie
+### Installazione librerie
 
 Una volta scaricato il progetto, installa le librerie con:
 ```commandline
 pip install -r requirements.txt
 ```
 
-## Refactor Dati
+### Refactor Dati
 
 Effettua il preprocessing sul dataset originario (i file sono già presenti).
 
@@ -25,7 +25,7 @@ python refactorCSV.py
 
 Genera nella cartella dataset i .csv necessari ai modelli.
 
-## Apprendimento Supervisionato
+### Apprendimento Supervisionato
 
 Allena e testa i modelli supervisionati.
 
@@ -47,7 +47,7 @@ Per ogni modello ci sono 3 varianti:
 - Modello allenato con KF
 - Modello allenato senza KF
 
-## Reti bayesiane
+### Reti bayesiane
 
 Allena e genera esempi casuali per delle reti bayesiane
 
@@ -60,7 +60,7 @@ python bayes_network.py 0
 - 0 - rete bayesiana generata automaticamente
 - 1 - rete bayesiana creata da me
 
-## Rete neurale
+### Rete neurale
 
 Allena e testa una rete neurale.
 
@@ -68,7 +68,7 @@ Allena e testa una rete neurale.
 python neural_network.py
 ```
 
-## Knowledge Graph
+### Knowledge Graph
 
 Crea ed effettua query su un KG
 
