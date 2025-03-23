@@ -1,22 +1,35 @@
+# Progetto 
+
+Questo progetto è realizzato per l'esame di ICON, tenuto dal Professore Nicola Fanizzi presso l'Università degli Studi di Bari Aldo Moro.
+
+Tutta la documentazione è disponibile nel file documentation.md o in formato PDF documentation.pdf
+
 # Esecuzione script
 
 Guida all’esecuzione degli script del progetto:
 
+## Installazione librerie
+
+Una volta scaricato il progetto, installa le librerie con:
+```commandline
+pip install -r requirements.txt
+```
+
 ## Refactor Dati
 
-Effettua il preprocessing sul dataset originario.
+Effettua il preprocessing sul dataset originario (i file sono già presenti).
 
-```python
+```commandline
 python refactorCSV.py
 ```
 
-Genera nella cartella dataset i .csv necessari ai modelli, i file sono già presenti
+Genera nella cartella dataset i .csv necessari ai modelli.
 
 ## Apprendimento Supervisionato
 
 Allena e testa i modelli supervisionati.
 
-```python
+```commandline
 python supervised_model.py [0-4]
 # ad esempio
 python supervised_model.py 0
@@ -38,7 +51,7 @@ Per ogni modello ci sono 3 varianti:
 
 Allena e genera esempi casuali per delle reti bayesiane
 
-```python
+```commandline
 python bayes_network.py [0-1]
 # ad esempio
 python bayes_network.py 0
@@ -51,7 +64,7 @@ python bayes_network.py 0
 
 Allena e testa una rete neurale.
 
-```python
+```commandline
 python neural_network.py
 ```
 
@@ -61,7 +74,7 @@ Crea ed effettua query su un KG
 
 - *scontri precedenti fra due team*
 
-    ```python
+    ```commandline
     python knowledge_graph.py 0 [team_a] [team_b]
     
     #ad esempio
@@ -70,7 +83,7 @@ Crea ed effettua query su un KG
 
 - *statistiche di un giocatore in una partita*
 
-    ```python
+    ```commandline
     python knowledge_graph.py 1 [game] [player]
     
     #ad esempio
@@ -81,7 +94,7 @@ Crea ed effettua query su un KG
 
 - *partite vinte da un team*
 
-    ```python
+    ```commandline
     python knowledge_graph.py 2 [team]
     
     #ad esempio
@@ -90,7 +103,7 @@ Crea ed effettua query su un KG
 
 - *partite giocate in una data*
 
-    ```python
+    ```commandline
     python knowledge_graph.py 3 [date]
     
     #ad esempio
@@ -101,7 +114,7 @@ Crea ed effettua query su un KG
 
 - *triple doppie di un giocatore*
 
-    ```python
+    ```commandline
     python knowledge_graph.py 4 [player]
     
     #ad esempio
@@ -112,7 +125,7 @@ Crea ed effettua query su un KG
 
 - *media punti in un periodo di un giocatore*
 
-    ```python
+    ```commandline
     python knowledge_graph.py 5 [player] [from] [to]
     
     #ad esempio
