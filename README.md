@@ -94,7 +94,7 @@ Crea ed effettua query su un KG
     python knowledge_graph.py 3 [date]
     
     #ad esempio
-    python knowledge_graph.py 3 2023-01-01
+    python knowledge_graph.py 3 2019-10-25
     ```
 
   Il formato della data è sempre YYYY-MM-DD.
@@ -116,7 +116,7 @@ Crea ed effettua query su un KG
     python knowledge_graph.py 5 [player] [from] [to]
     
     #ad esempio
-    python knowledge_graph.py 5 2023-01-01 2023-02-01
+    python knowledge_graph.py 5 Luka_Doncic 2023-01-01 2023-02-01
     ```
 
   L’unico giocatore presente è Luka_Doncic, altri giocatori non produrranno alcun risultato.

@@ -113,7 +113,7 @@ for epoch in range(epochs):
         print(f"Epoca {epoch}/{epochs} - Loss: {loss:.5f}")
 
 
-print("Calcolo su test_set...")
+print("Testing sul test set...")
 
 x_test = scaler.fit_transform(data_test.drop(columns=["WIN"]))
 y_tests = np.array(data_test["WIN"]).reshape(-1, 1)

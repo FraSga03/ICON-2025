@@ -29,8 +29,14 @@ testLength: int = 50
 
 file.to_csv("./datasets/doncic_ref.csv", index=False)
 
+print("Dataset creato!")
+
 test = file.tail(testLength)
 test.to_csv("./datasets/doncic_ref_test.csv", index=False)
 
+print("Test set creato!")
+
 train = file.head(len(file) - testLength)
 train.to_csv("./datasets/doncic_ref_train.csv", index=False)
+
+print("Train set creato! \nTutti i file sono nella cartella /datasets")

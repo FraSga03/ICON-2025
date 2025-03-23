@@ -95,11 +95,12 @@ def get_player_stats(graph, game, player):
     return graph.query(f"""
         PREFIX ns: <http://icon-uniba.uni/exam/>
         
-        SELECT ?game ?player ?points ?assists ?rebounds
+        SELECT ?game ?player ?team ?points ?assists ?rebounds
         WHERE {{
             ?game ns:ha ?stat .
             ?stat ns:giocatore ?player .
             ?stat ns:points ?points .
+            ?stat ns:del_team ?team .
             ?stat ns:assists ?assists .
             ?stat ns:total_rebounds ?rebounds .
             FILTER (?player = <http://icon-uniba.uni/exam/players/{player}> && ?game = <http://icon-uniba.uni/exam/games/{game}>)
@@ -136,13 +137,14 @@ def get_player_triple_doubles(graph, player):
     return graph.query(f"""
         PREFIX ns: <http://icon-uniba.uni/exam/>
         
-        SELECT ?game ?date ?home_team ?away_team ?player ?points ?assists ?rebounds
+        SELECT ?game ?date ?home_team ?away_team ?player ?team ?points ?assists ?rebounds
         WHERE {{
             ?game ns:giocata_il ?date .
             ?game ns:ha ?stat .
             ?stat ns:giocatore ?player .
             ?game ns:gioca_in_casa ?home_team .
             ?game ns:gioca_in_trasferta ?away_team .
+            ?stat ns:del_team ?team .
             ?stat ns:points ?points .
             ?stat ns:assists ?assists .
             ?stat ns:total_rebounds ?rebounds .
@@ -174,7 +176,7 @@ def get_avg_pts_between_dates(graph, player, from_d, to_d):
 try:
     graph = get_graph()
 
-    graph.serialize("./documents/knowledge_graph/kg.rdf", format="turtle")
+    graph.serialize("./documents/knowledge_graph/knowledge_graph.rdf", format="turtle")
 
     command = int(sys.argv[1])
 
@@ -190,6 +192,7 @@ try:
             q_results = get_player_stats(graph, int(sys.argv[2]), sys.argv[3])
             q_formatters = [
                 ("Partita", "game"),
+                ("Team", "team"),
                 ("Giocatore", "player"),
                 ("Punti", "points"),
                 ("Assist", "assists"),
@@ -219,6 +222,7 @@ try:
                 ("Team di casa", "home_team"),
                 ("Team in trasferta", "away_team"),
                 ("Giocatore", "player"),
+                ("Squadra", "team"),
                 ("Punti", "points"),
                 ("Assist", "assists"),
                 ("Rimbalzi", "rebounds"),

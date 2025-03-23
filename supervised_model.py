@@ -31,7 +31,7 @@ def generate_report(model, x_test, y_test, name, training_type):
     plot_pr_rate_curve(y_test, y_prediction, name, f"documents/{type(model).__name__}/{training_type}_PR.png")
     plot_f1(y_test, y_prediction, name, f"documents/{type(model).__name__}/{training_type}_F1.png")
 
-    print(f"Accuratezza {accuracy_score(y_test, y_prediction)}\n")
+    print(f"Accuratezza: {accuracy_score(y_test, y_prediction)}\nStampa completata!\n")
 
 
 def dt_with_grid_k_fold_shuffle(model, params, x_train, y_train, x_test, y_test, must_normalize):
@@ -97,7 +97,7 @@ def dt_with_grid_k_fold(model, params, x_train, y_train, x_test, y_test, must_no
 
 
 def dt_without_cv(model, x_train, y_train, x_test, y_test, must_normalize):
-    print(f"Training {type(model).__name__} senza KF")
+    print(f"Training {type(model).__name__} senza CV")
 
     if must_normalize:
         scaler = StandardScaler()
@@ -107,7 +107,7 @@ def dt_without_cv(model, x_train, y_train, x_test, y_test, must_normalize):
 
     model.fit(x_train, y_train)
 
-    print("Training finito")
+    print("Training completato!")
 
     return {
         generate_report(
@@ -188,8 +188,13 @@ try:
     index = int(sys.argv[1])
     predictor = predictors[index]
 
+    print("-----------------------------------------")
     acc1, model1 = dt_without_cv(predictor.model, X_train, Y_train, X_test, Y_test, predictor.must_normalize)
+
+    print("-----------------------------------------")
     acc2, model2 = dt_with_grid_k_fold(predictor.model, predictor.params, X_train, Y_train, X_test, Y_test, predictor.must_normalize)
+
+    print("-----------------------------------------")
     acc3, model3 = dt_with_grid_k_fold_shuffle(predictor.model, predictor.params, X_train, Y_train, X_test, Y_test, predictor.must_normalize)
 except:
     print("Indica un modello utilizzando un parametro che va da 0 a 4")
