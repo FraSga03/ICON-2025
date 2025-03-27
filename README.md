@@ -4,6 +4,8 @@ Questo progetto è realizzato per l'esame di ICON, tenuto dal Professore Nicola 
 
 Tutta la documentazione è disponibile nel file [documentation.md](documentation.md)
 documentation.md o in formato PDF [documentation.pdf](documentation.pdf).
+
+[Repository GitHub](https://github.com/FraSga03/ICON-2025.git)
 ## Esecuzione script
 
 Guida all’esecuzione degli script del progetto:
